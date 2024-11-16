@@ -1,0 +1,32 @@
+#configuration static GATEWAY
+#spring:
+#  cloud:
+#    gateway:
+#      mvc:
+#        routes:
+#          - id: r1
+#            uri: http://localhost:8081
+#            predicates:
+#              - Path= /api/customers/**
+#          - id: r2
+#            uri: http://localhost:8082
+#            predicates:
+#              - Path= /api/products/**
+
+
+# 2 EMEM configuration STATIQUE de la gateway
+# possible de faire sans tirer : - Path= /api/customers/** ==>  Path= /api/customers/**
+# spring reactif utilise un server embarqué s'applelle NETTY
+# ignorer cette fichier en changant leur nom par "a" pour passer au configuration dynamique
+spring:
+  cloud:
+    gateway:
+      routes:
+        - id: lb://CUSTOMER-SERVICE
+          uri: http://localhost:8081
+          predicates:
+            - Path= /api/customers/**
+        - id: lb://INVENTORY-SERVICE
+          uri: http://localhost:8082
+          predicates:
+            - Path= /api/products/**
